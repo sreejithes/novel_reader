@@ -1,0 +1,2 @@
+C:/OtherProjects/novel_reader/example/android/app/.cxx/Debug/4v5x111i/x86_64/CMakeFiles/edit_cache.dir
+C:/OtherProjects/novel_reader/example/android/app/.cxx/Debug/4v5x111i/x86_64/CMakeFiles/rebuild_cache.dir
