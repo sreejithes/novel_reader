@@ -1,7 +1,6 @@
 # Advanced Novel Reader 📖
 
 [![pub package](https://img.shields.io/pub/v/novel_reader.svg)](https://pub.dev/packages/novel_reader)
-[![GitHub](https://img.shields.io/github/stars/sreejithes/novel_reader.svg?style=social)](https://github.com/sreejithes/novel_reader)
 
 A professional-grade, highly customizable **Novel & Ebook Reader** package for Flutter. Designed for high-performance reading experiences with a focus on premium typography and an immersive, distraction-free UI.
 
