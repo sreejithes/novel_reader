@@ -127,16 +127,3 @@ Built on **Riverpod** for robust state management and **Shared Preferences** for
 ## 🤝 Contributing
 
 Contributions are welcome! If you find a bug or have a feature request, please open an issue on [GitHub](https://github.com/sreejithes/novel_reader/issues). Pull requests are also appreciated.
-
----
-
-## 🔗 Links
-
-- **Repository**: [github.com/sreejithes/novel_reader](https://github.com/sreejithes/novel_reader)
-- **Issues**: [github.com/sreejithes/novel_reader/issues](https://github.com/sreejithes/novel_reader/issues)
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
