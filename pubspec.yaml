@@ -1,6 +1,6 @@
 name: novel_reader
 description: "A professional-grade, highly customizable Novel/Ebook reader package for Flutter. Supports vertical scroll, horizontal paging, professional themes, and full state persistence."
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/sreejithes/novel_reader
 repository: https://github.com/sreejithes/novel_reader
 

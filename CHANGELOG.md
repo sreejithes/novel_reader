@@ -1,3 +1,8 @@
+## 1.0.1
+
+* **Enhanced Reader Theme**: Expanded `ReaderTheme` with secondary text, surface, divider, and selection colors for more granular UI control.
+* **Improved UI Consistency**: Refined default themes (Light, Dark, Sepia, etc.) with better color balance.
+
 ## 1.0.0
 
 * **Initial Release** of Advanced Novel Reader.

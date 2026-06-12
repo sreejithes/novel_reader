@@ -36,7 +36,7 @@ Add `novel_reader` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  novel_reader: ^1.0.0
+  novel_reader: ^1.0.1
 ```
 
 Then, run:
