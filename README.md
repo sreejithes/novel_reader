@@ -1,7 +1,7 @@
 # Advanced Novel Reader 📖
 
 [![pub package](https://img.shields.io/pub/v/novel_reader.svg)](https://pub.dev/packages/novel_reader)
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![GitHub](https://img.shields.io/github/stars/sreejithes/novel_reader.svg?style=social)](https://github.com/sreejithes/novel_reader)
 
 A professional-grade, highly customizable **Novel & Ebook Reader** package for Flutter. Designed for high-performance reading experiences with a focus on premium typography and an immersive, distraction-free UI.
 
@@ -127,4 +127,17 @@ Built on **Riverpod** for robust state management and **Shared Preferences** for
 
 ## 🤝 Contributing
 
-Contributions are welcome! If you find a bug or have a feature request, please open an issue on GitHub. Pull requests are also appreciated.
+Contributions are welcome! If you find a bug or have a feature request, please open an issue on [GitHub](https://github.com/sreejithes/novel_reader/issues). Pull requests are also appreciated.
+
+---
+
+## 🔗 Links
+
+- **Repository**: [github.com/sreejithes/novel_reader](https://github.com/sreejithes/novel_reader)
+- **Issues**: [github.com/sreejithes/novel_reader/issues](https://github.com/sreejithes/novel_reader/issues)
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
