@@ -10,8 +10,8 @@ import '../models/reading_settings.dart';
 /// Provider for the [ReadingSettings] state.
 final settingsProvider =
     StateNotifierProvider<SettingsNotifier, ReadingSettings>((ref) {
-      return SettingsNotifier();
-    });
+  return SettingsNotifier();
+});
 
 /// Notifier that manages reading settings and persists them to local storage.
 class SettingsNotifier extends StateNotifier<ReadingSettings> {
@@ -26,9 +26,8 @@ class SettingsNotifier extends StateNotifier<ReadingSettings> {
     state = ReadingSettings(
       fontSize: prefs.getDouble('font_size') ?? 18.0,
       fontFamily: prefs.getString('font_family') ?? 'Default',
-      themeMode:
-          ReaderThemeMode.values[prefs.getInt('theme_mode') ??
-              3], // Default Sepia
+      themeMode: ReaderThemeMode
+          .values[prefs.getInt('theme_mode') ?? 3], // Default Sepia
       scrollMode: ScrollMode.values[prefs.getInt('scroll_mode') ?? 0],
       lineHeight: prefs.getDouble('line_height') ?? 1.5,
       brightness: prefs.getDouble('brightness') ?? 1.0,

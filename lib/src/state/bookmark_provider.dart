@@ -6,8 +6,8 @@ import '../models/bookmark.dart';
 /// Provider for the list of user [Bookmark]s.
 final bookmarkProvider =
     StateNotifierProvider<BookmarkNotifier, List<Bookmark>>((ref) {
-      return BookmarkNotifier();
-    });
+  return BookmarkNotifier();
+});
 
 /// Notifier that manages and persists user bookmarks.
 class BookmarkNotifier extends StateNotifier<List<Bookmark>> {

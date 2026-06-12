@@ -164,15 +164,14 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
         AnimatedSize(
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeInOut,
-          child:
-              _showControls
-                  ? ReaderAppBar(
-                    title: widget.config.title,
-                    theme: theme,
-                    onSettingsTap: () => _showSettings(context),
-                    chapters: widget.config.chapters,
-                  )
-                  : const SizedBox.shrink(),
+          child: _showControls
+              ? ReaderAppBar(
+                  title: widget.config.title,
+                  theme: theme,
+                  onSettingsTap: () => _showSettings(context),
+                  chapters: widget.config.chapters,
+                )
+              : const SizedBox.shrink(),
         ),
         Expanded(
           child: GestureDetector(
@@ -191,20 +190,19 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
         AnimatedSize(
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeInOut,
-          child:
-              _showControls
-                  ? ReaderBottomBar(
-                    theme: theme,
-                    currentChapterIndex: readingState.currentChapterIndex,
-                    totalChapters: widget.config.chapters.length,
-                    onChapterChanged: (index) {
-                      ref.read(readingProvider.notifier).updateChapter(index);
-                    },
-                    onPreviousChapter: isFirstChapter ? null : _handlePrevious,
-                    onNextChapter: isLastChapter ? null : _handleNext,
-                    scrollController: _scrollController,
-                  )
-                  : const SizedBox.shrink(),
+          child: _showControls
+              ? ReaderBottomBar(
+                  theme: theme,
+                  currentChapterIndex: readingState.currentChapterIndex,
+                  totalChapters: widget.config.chapters.length,
+                  onChapterChanged: (index) {
+                    ref.read(readingProvider.notifier).updateChapter(index);
+                  },
+                  onPreviousChapter: isFirstChapter ? null : _handlePrevious,
+                  onNextChapter: isLastChapter ? null : _handleNext,
+                  scrollController: _scrollController,
+                )
+              : const SizedBox.shrink(),
         ),
       ],
     );
@@ -280,11 +278,10 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
-      builder:
-          (context) => UncontrolledProviderScope(
-            container: container,
-            child: const SettingsPanel(),
-          ),
+      builder: (context) => UncontrolledProviderScope(
+        container: container,
+        child: const SettingsPanel(),
+      ),
     );
   }
 }

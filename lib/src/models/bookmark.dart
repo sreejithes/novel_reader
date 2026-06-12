@@ -30,21 +30,21 @@ class Bookmark {
 
   /// Converts the bookmark to a JSON map for storage.
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'chapterIndex': chapterIndex,
-    'chapterTitle': chapterTitle,
-    'position': position,
-    'timestamp': timestamp.toIso8601String(),
-    'note': note,
-  };
+        'id': id,
+        'chapterIndex': chapterIndex,
+        'chapterTitle': chapterTitle,
+        'position': position,
+        'timestamp': timestamp.toIso8601String(),
+        'note': note,
+      };
 
   /// Creates a [Bookmark] from a JSON map.
   factory Bookmark.fromJson(Map<String, dynamic> json) => Bookmark(
-    id: json['id'],
-    chapterIndex: json['chapterIndex'],
-    chapterTitle: json['chapterTitle'],
-    position: json['position'],
-    timestamp: DateTime.parse(json['timestamp']),
-    note: json['note'],
-  );
+        id: json['id'],
+        chapterIndex: json['chapterIndex'],
+        chapterTitle: json['chapterTitle'],
+        position: json['position'],
+        timestamp: DateTime.parse(json['timestamp']),
+        note: json['note'],
+      );
 }

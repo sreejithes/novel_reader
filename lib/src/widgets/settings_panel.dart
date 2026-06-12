@@ -183,31 +183,28 @@ class SettingsPanel extends ConsumerWidget {
                     color: modeTheme.backgroundColor,
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color:
-                          isSelected
-                              ? theme.accentColor
-                              : theme.textColor.withValues(alpha: 0.08),
+                      color: isSelected
+                          ? theme.accentColor
+                          : theme.textColor.withValues(alpha: 0.08),
                       width: isSelected ? 3 : 1,
                     ),
-                    boxShadow:
-                        isSelected
-                            ? [
-                              BoxShadow(
-                                color: theme.accentColor.withValues(alpha: 0.2),
-                                blurRadius: 12,
-                                spreadRadius: 2,
-                              ),
-                            ]
-                            : [],
+                    boxShadow: isSelected
+                        ? [
+                            BoxShadow(
+                              color: theme.accentColor.withValues(alpha: 0.2),
+                              blurRadius: 12,
+                              spreadRadius: 2,
+                            ),
+                          ]
+                        : [],
                   ),
-                  child:
-                      isSelected
-                          ? Icon(
-                            Icons.check_rounded,
-                            color: modeTheme.textColor,
-                            size: 22,
-                          )
-                          : null,
+                  child: isSelected
+                      ? Icon(
+                          Icons.check_rounded,
+                          color: modeTheme.textColor,
+                          size: 22,
+                        )
+                      : null,
                 ),
               );
             },
@@ -357,16 +354,15 @@ class SettingsPanel extends ConsumerWidget {
                     color:
                         isSelected ? theme.backgroundColor : Colors.transparent,
                     borderRadius: BorderRadius.circular(10),
-                    boxShadow:
-                        isSelected
-                            ? [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.05),
-                                blurRadius: 4,
-                                offset: const Offset(0, 2),
-                              ),
-                            ]
-                            : [],
+                    boxShadow: isSelected
+                        ? [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.05),
+                              blurRadius: 4,
+                              offset: const Offset(0, 2),
+                            ),
+                          ]
+                        : [],
                   ),
                   alignment: Alignment.center,
                   child: Text(
@@ -375,10 +371,9 @@ class SettingsPanel extends ConsumerWidget {
                       fontSize: 14,
                       fontWeight:
                           isSelected ? FontWeight.w700 : FontWeight.w500,
-                      color:
-                          isSelected
-                              ? theme.accentColor
-                              : theme.textColor.withValues(alpha: 0.5),
+                      color: isSelected
+                          ? theme.accentColor
+                          : theme.textColor.withValues(alpha: 0.5),
                     ),
                   ),
                 ),
