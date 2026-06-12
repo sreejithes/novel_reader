@@ -409,14 +409,14 @@ class SettingsPanel extends ConsumerWidget {
         SizedBox(
           width: double.infinity,
           child: SegmentedButton<ScrollMode>(
-            segments: [
+            segments: const [
               ButtonSegment<ScrollMode>(
                 value: ScrollMode.vertical,
-                icon: const Icon(Icons.swipe_vertical_outlined,color: Colors.black54,),
+                icon: Icon(Icons.swipe_vertical_outlined,color: Colors.black54,),
               ),
               ButtonSegment<ScrollMode>(
                 value: ScrollMode.horizontal,
-                icon: const Icon(Icons.swap_horiz_outlined,color: Colors.black54,),
+                icon: Icon(Icons.swap_horiz_outlined,color: Colors.black54,),
               ),
             ],
             selected: {settings.scrollMode},
