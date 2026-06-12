@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -38,6 +40,9 @@ class SettingsNotifier extends StateNotifier<ReadingSettings> {
 
   /// Applies system-level settings like brightness and wake lock.
   Future<void> _applySystemSettings() async {
+    if (Platform.environment.containsKey('FLUTTER_TEST')) {
+      return;
+    }
     try {
       if (state.keepScreenAwake) {
         await WakelockPlus.enable();
@@ -82,6 +87,10 @@ class SettingsNotifier extends StateNotifier<ReadingSettings> {
   /// Toggles the wake lock setting and persists the change.
   void toggleKeepAwake(bool value) {
     state = state.copyWith(keepScreenAwake: value);
+    if (Platform.environment.containsKey('FLUTTER_TEST')) {
+      _saveSettings();
+      return;
+    }
     try {
       if (value) {
         WakelockPlus.enable();
@@ -109,6 +118,10 @@ class SettingsNotifier extends StateNotifier<ReadingSettings> {
   /// Updates the screen brightness and persists the change.
   void updateBrightness(double value) {
     state = state.copyWith(brightness: value, useSystemBrightness: false);
+    if (Platform.environment.containsKey('FLUTTER_TEST')) {
+      _saveSettings();
+      return;
+    }
     try {
       ScreenBrightness().setApplicationScreenBrightness(value);
     } catch (e) {

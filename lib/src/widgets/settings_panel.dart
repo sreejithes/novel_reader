@@ -164,8 +164,9 @@ class SettingsPanel extends ConsumerWidget {
             separatorBuilder: (_, __) => const SizedBox(width: 16),
             itemBuilder: (context, index) {
               final mode = ReaderThemeMode.values[index];
-              if (mode == ReaderThemeMode.custom)
+              if (mode == ReaderThemeMode.custom) {
                 return const SizedBox.shrink();
+              }
               final modeTheme = ReaderTheme.getTheme(mode);
               final isSelected = settings.themeMode == mode;
 
@@ -284,8 +285,9 @@ class SettingsPanel extends ConsumerWidget {
                   min: 12,
                   max: 36,
                   onChanged: (val) {
-                    if (val.toInt() != settings.fontSize.toInt())
+                    if (val.toInt() != settings.fontSize.toInt()) {
                       HapticFeedback.selectionClick();
+                    }
                     notifier.updateFontSize(val);
                   },
                 ),
