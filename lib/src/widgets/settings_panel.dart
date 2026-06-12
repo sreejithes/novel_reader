@@ -397,7 +397,7 @@ class SettingsPanel extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'NAVIGATION',
+          'Navigation',
           style: TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w900,
@@ -412,13 +412,11 @@ class SettingsPanel extends ConsumerWidget {
             segments: [
               ButtonSegment<ScrollMode>(
                 value: ScrollMode.vertical,
-                label: Text(l10n.vertical),
-                icon: const Icon(Icons.unfold_more_rounded),
+                icon: const Icon(Icons.swipe_vertical_outlined,color: Colors.black54,),
               ),
               ButtonSegment<ScrollMode>(
                 value: ScrollMode.horizontal,
-                label: Text(l10n.horizontal),
-                icon: const Icon(Icons.unfold_less_rounded),
+                icon: const Icon(Icons.swap_horiz_outlined,color: Colors.black54,),
               ),
             ],
             selected: {settings.scrollMode},
@@ -445,7 +443,7 @@ class SettingsPanel extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'ALIGN',
+          'Align',
           style: TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w900,
@@ -460,19 +458,19 @@ class SettingsPanel extends ConsumerWidget {
             segments: const [
               ButtonSegment<TextAlign>(
                 value: TextAlign.left,
-                icon: Icon(Icons.format_align_left_rounded),
+                icon: Icon(Icons.format_align_left_rounded,color: Colors.black54),
               ),
               ButtonSegment<TextAlign>(
                 value: TextAlign.center,
-                icon: Icon(Icons.format_align_center_rounded),
+                icon: Icon(Icons.format_align_center_rounded,color: Colors.black54),
               ),
               ButtonSegment<TextAlign>(
                 value: TextAlign.right,
-                icon: Icon(Icons.format_align_right_rounded),
+                icon: Icon(Icons.format_align_right_rounded,color: Colors.black54),
               ),
               ButtonSegment<TextAlign>(
                 value: TextAlign.justify,
-                icon: Icon(Icons.format_align_justify_rounded),
+                icon: Icon(Icons.format_align_justify_rounded,color: Colors.black54),
               ),
             ],
             selected: {settings.textAlign},
@@ -490,8 +488,8 @@ class SettingsPanel extends ConsumerWidget {
 
   ButtonStyle _segmentedButtonStyle(ReaderTheme theme) {
     return SegmentedButton.styleFrom(
-      selectedBackgroundColor: theme.accentColor,
-      selectedForegroundColor: Colors.white,
+      selectedBackgroundColor: Colors.grey.shade300,
+      selectedForegroundColor: Colors.grey,
       foregroundColor: theme.textColor.withValues(alpha: 0.4),
       backgroundColor: theme.textColor.withValues(alpha: 0.05),
       side: BorderSide.none,
