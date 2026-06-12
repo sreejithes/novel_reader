@@ -7,7 +7,7 @@ void main() {
       debugShowCheckedModeBanner: false,
       home: ExampleApp(),
       localizationsDelegates: [ReaderLocalizationsDelegate()],
-      supportedLocales: [Locale('en'), Locale('es')],
+      supportedLocales: [Locale('en')],
     ),
   );
 }

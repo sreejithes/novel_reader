@@ -32,7 +32,10 @@ class ReaderAppBar extends StatelessWidget {
       decoration: BoxDecoration(
         color: theme.backgroundColor,
         border: Border(
-          bottom: BorderSide(color: theme.textColor.withValues(alpha: 0.08), width: 0.5),
+          bottom: BorderSide(
+            color: theme.textColor.withValues(alpha: 0.08),
+            width: 0.5,
+          ),
         ),
       ),
       child: AppBar(
@@ -51,7 +54,11 @@ class ReaderAppBar extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new, color: theme.textColor, size: 18),
+          icon: Icon(
+            Icons.arrow_back_ios_new,
+            color: theme.textColor,
+            size: 18,
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         actions: [

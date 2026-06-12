@@ -19,7 +19,14 @@ class PaginationHelper {
 
     int start = 0;
     while (start < content.length) {
-      int end = _findPageEnd(content, start, style, maxWidth, maxHeight, textPainter);
+      int end = _findPageEnd(
+        content,
+        start,
+        style,
+        maxWidth,
+        maxHeight,
+        textPainter,
+      );
       pages.add(content.substring(start, end));
       start = end;
     }
@@ -41,7 +48,10 @@ class PaginationHelper {
 
     while (low <= high) {
       int mid = (low + high) ~/ 2;
-      textPainter.text = TextSpan(text: content.substring(start, mid), style: style);
+      textPainter.text = TextSpan(
+        text: content.substring(start, mid),
+        style: style,
+      );
       textPainter.layout(maxWidth: maxWidth);
 
       if (textPainter.height <= maxHeight) {
@@ -51,7 +61,7 @@ class PaginationHelper {
         high = mid - 1;
       }
     }
-    
+
     // Adjust bestEnd to not break words if possible
     if (bestEnd < content.length) {
       int spaceIndex = content.lastIndexOf(' ', bestEnd);
@@ -59,7 +69,7 @@ class PaginationHelper {
         bestEnd = spaceIndex + 1;
       }
     }
-    
+
     return bestEnd;
   }
 }

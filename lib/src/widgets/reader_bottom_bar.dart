@@ -43,14 +43,20 @@ class ReaderBottomBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = ReaderLocalizations.of(context);
-    final progress = totalChapters > 1 ? currentChapterIndex / (totalChapters - 1) : 1.0;
+    final progress =
+        totalChapters > 1 ? currentChapterIndex / (totalChapters - 1) : 1.0;
 
     return Container(
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 8),
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).padding.bottom + 8,
+      ),
       decoration: BoxDecoration(
         color: theme.backgroundColor,
         border: Border(
-          top: BorderSide(color: theme.textColor.withValues(alpha: 0.08), width: 0.5),
+          top: BorderSide(
+            color: theme.textColor.withValues(alpha: 0.08),
+            width: 0.5,
+          ),
         ),
       ),
       child: Padding(
@@ -64,11 +70,17 @@ class ReaderBottomBar extends ConsumerWidget {
                   child: SliderTheme(
                     data: SliderThemeData(
                       activeTrackColor: theme.accentColor,
-                      inactiveTrackColor: theme.accentColor.withValues(alpha: 0.1),
+                      inactiveTrackColor: theme.accentColor.withValues(
+                        alpha: 0.1,
+                      ),
                       thumbColor: theme.accentColor,
                       trackHeight: 2,
-                      thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 5),
-                      overlayShape: const RoundSliderOverlayShape(overlayRadius: 12),
+                      thumbShape: const RoundSliderThumbShape(
+                        enabledThumbRadius: 5,
+                      ),
+                      overlayShape: const RoundSliderOverlayShape(
+                        overlayRadius: 12,
+                      ),
                     ),
                     child: Slider(
                       value: progress.clamp(0.0, 1.0),
@@ -128,7 +140,8 @@ class ReaderBottomBar extends ConsumerWidget {
     bool isForward = false,
   }) {
     final isEnabled = onPressed != null;
-    final color = isEnabled ? theme.textColor : theme.textColor.withValues(alpha: 0.2);
+    final color =
+        isEnabled ? theme.textColor : theme.textColor.withValues(alpha: 0.2);
 
     return InkWell(
       onTap: onPressed,

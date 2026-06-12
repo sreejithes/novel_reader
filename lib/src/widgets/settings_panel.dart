@@ -22,7 +22,8 @@ class SettingsPanel extends ConsumerWidget {
     final theme = ReaderTheme.getTheme(settings.themeMode);
     final l10n = ReaderLocalizations.of(context);
     final platform = Theme.of(context).platform;
-    final isMobile = platform == TargetPlatform.android || platform == TargetPlatform.iOS;
+    final isMobile =
+        platform == TargetPlatform.android || platform == TargetPlatform.iOS;
 
     return Container(
       decoration: BoxDecoration(
@@ -73,9 +74,23 @@ class SettingsPanel extends ConsumerWidget {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(child: _buildTextAlignSection(settings, notifier, theme, l10n)),
+                          Expanded(
+                            child: _buildTextAlignSection(
+                              settings,
+                              notifier,
+                              theme,
+                              l10n,
+                            ),
+                          ),
                           const SizedBox(width: 24),
-                          Expanded(child: _buildScrollModeSection(settings, notifier, theme, l10n)),
+                          Expanded(
+                            child: _buildScrollModeSection(
+                              settings,
+                              notifier,
+                              theme,
+                              l10n,
+                            ),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 32),
@@ -122,12 +137,17 @@ class SettingsPanel extends ConsumerWidget {
   }
 
   /// Builds the theme selection section with interactive swatches.
-  Widget _buildThemeSection(ReadingSettings settings, SettingsNotifier notifier, ReaderTheme theme, ReaderLocalizations l10n) {
+  Widget _buildThemeSection(
+    ReadingSettings settings,
+    SettingsNotifier notifier,
+    ReaderTheme theme,
+    ReaderLocalizations l10n,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          l10n.theme.toUpperCase(),
+          l10n.theme,
           style: TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w900,
@@ -144,7 +164,8 @@ class SettingsPanel extends ConsumerWidget {
             separatorBuilder: (_, __) => const SizedBox(width: 16),
             itemBuilder: (context, index) {
               final mode = ReaderThemeMode.values[index];
-              if (mode == ReaderThemeMode.custom) return const SizedBox.shrink();
+              if (mode == ReaderThemeMode.custom)
+                return const SizedBox.shrink();
               final modeTheme = ReaderTheme.getTheme(mode);
               final isSelected = settings.themeMode == mode;
 
@@ -154,23 +175,38 @@ class SettingsPanel extends ConsumerWidget {
                   notifier.updateThemeMode(mode);
                 },
                 child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 250),
+                  duration: const Duration(milliseconds: 200),
                   width: 44,
                   height: 44,
                   decoration: BoxDecoration(
                     color: modeTheme.backgroundColor,
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: isSelected ? theme.accentColor : theme.textColor.withValues(alpha: 0.08),
+                      color:
+                          isSelected
+                              ? theme.accentColor
+                              : theme.textColor.withValues(alpha: 0.08),
                       width: isSelected ? 3 : 1,
                     ),
-                    boxShadow: isSelected
-                        ? [BoxShadow(color: theme.accentColor.withValues(alpha: 0.2), blurRadius: 12, spreadRadius: 2)]
-                        : [],
+                    boxShadow:
+                        isSelected
+                            ? [
+                              BoxShadow(
+                                color: theme.accentColor.withValues(alpha: 0.2),
+                                blurRadius: 12,
+                                spreadRadius: 2,
+                              ),
+                            ]
+                            : [],
                   ),
-                  child: isSelected
-                      ? Icon(Icons.check_rounded, color: modeTheme.textColor, size: 22)
-                      : null,
+                  child:
+                      isSelected
+                          ? Icon(
+                            Icons.check_rounded,
+                            color: modeTheme.textColor,
+                            size: 22,
+                          )
+                          : null,
                 ),
               );
             },
@@ -181,7 +217,12 @@ class SettingsPanel extends ConsumerWidget {
   }
 
   /// Builds the font size adjustment section.
-  Widget _buildFontSizeSection(ReadingSettings settings, SettingsNotifier notifier, ReaderTheme theme, ReaderLocalizations l10n) {
+  Widget _buildFontSizeSection(
+    ReadingSettings settings,
+    SettingsNotifier notifier,
+    ReaderTheme theme,
+    ReaderLocalizations l10n,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -189,7 +230,7 @@ class SettingsPanel extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              l10n.fontSize.toUpperCase(),
+              l10n.fontSize,
               style: TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.w900,
@@ -205,7 +246,11 @@ class SettingsPanel extends ConsumerWidget {
               ),
               child: Text(
                 '${settings.fontSize.toInt()}px',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800, color: theme.accentColor),
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w800,
+                  color: theme.accentColor,
+                ),
               ),
             ),
           ],
@@ -213,7 +258,14 @@ class SettingsPanel extends ConsumerWidget {
         const SizedBox(height: 12),
         Row(
           children: [
-            Text('A', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: theme.textColor.withValues(alpha: 0.3))),
+            Text(
+              'A',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: theme.textColor.withValues(alpha: 0.3),
+              ),
+            ),
             Expanded(
               child: SliderTheme(
                 data: SliderThemeData(
@@ -221,7 +273,10 @@ class SettingsPanel extends ConsumerWidget {
                   inactiveTrackColor: theme.textColor.withValues(alpha: 0.05),
                   thumbColor: Colors.white,
                   trackHeight: 6,
-                  thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 10, elevation: 4),
+                  thumbShape: const RoundSliderThumbShape(
+                    enabledThumbRadius: 10,
+                    elevation: 4,
+                  ),
                   overlayColor: theme.accentColor.withValues(alpha: 0.1),
                 ),
                 child: Slider(
@@ -229,13 +284,21 @@ class SettingsPanel extends ConsumerWidget {
                   min: 12,
                   max: 36,
                   onChanged: (val) {
-                    if (val.toInt() != settings.fontSize.toInt()) HapticFeedback.selectionClick();
+                    if (val.toInt() != settings.fontSize.toInt())
+                      HapticFeedback.selectionClick();
                     notifier.updateFontSize(val);
                   },
                 ),
               ),
             ),
-            Text('A', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: theme.textColor.withValues(alpha: 0.3))),
+            Text(
+              'A',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: theme.textColor.withValues(alpha: 0.3),
+              ),
+            ),
           ],
         ),
       ],
@@ -243,13 +306,18 @@ class SettingsPanel extends ConsumerWidget {
   }
 
   /// Builds the font family selection section.
-  Widget _buildFontFamilySection(ReadingSettings settings, SettingsNotifier notifier, ReaderTheme theme, ReaderLocalizations l10n) {
+  Widget _buildFontFamilySection(
+    ReadingSettings settings,
+    SettingsNotifier notifier,
+    ReaderTheme theme,
+    ReaderLocalizations l10n,
+  ) {
     final fonts = ['Default', 'Serif', 'Sans Serif', 'Roboto', 'Georgia'];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          l10n.fontFamily.toUpperCase(),
+          l10n.fontFamily,
           style: TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w900,
@@ -278,22 +346,37 @@ class SettingsPanel extends ConsumerWidget {
                   notifier.updateFontFamily(font);
                 },
                 child: Container(
-                  margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 4,
+                    horizontal: 2,
+                  ),
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
-                    color: isSelected ? theme.backgroundColor : Colors.transparent,
+                    color:
+                        isSelected ? theme.backgroundColor : Colors.transparent,
                     borderRadius: BorderRadius.circular(10),
-                    boxShadow: isSelected
-                        ? [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 4, offset: const Offset(0, 2))]
-                        : [],
+                    boxShadow:
+                        isSelected
+                            ? [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.05),
+                                blurRadius: 4,
+                                offset: const Offset(0, 2),
+                              ),
+                            ]
+                            : [],
                   ),
                   alignment: Alignment.center,
                   child: Text(
                     font,
                     style: TextStyle(
                       fontSize: 14,
-                      fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                      color: isSelected ? theme.accentColor : theme.textColor.withValues(alpha: 0.5),
+                      fontWeight:
+                          isSelected ? FontWeight.w700 : FontWeight.w500,
+                      color:
+                          isSelected
+                              ? theme.accentColor
+                              : theme.textColor.withValues(alpha: 0.5),
                     ),
                   ),
                 ),
@@ -306,7 +389,13 @@ class SettingsPanel extends ConsumerWidget {
   }
 
   /// Builds the navigation mode (Vertical/Horizontal) section.
-  Widget _buildScrollModeSection(ReadingSettings settings, SettingsNotifier notifier, ReaderTheme theme, ReaderLocalizations l10n) {
+  /// Builds the navigation mode (Vertical/Horizontal) section.
+  Widget _buildScrollModeSection(
+    ReadingSettings settings,
+    SettingsNotifier notifier,
+    ReaderTheme theme,
+    ReaderLocalizations l10n,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -320,68 +409,41 @@ class SettingsPanel extends ConsumerWidget {
           ),
         ),
         const SizedBox(height: 12),
-        Container(
-          padding: const EdgeInsets.all(4),
-          decoration: BoxDecoration(
-            color: theme.textColor.withValues(alpha: 0.05),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Row(
-            children: [
-              _buildCompactModeButton(
-                icon: Icons.unfold_more_rounded,
-                isSelected: settings.scrollMode == ScrollMode.vertical,
-                theme: theme,
-                onTap: () => notifier.updateScrollMode(ScrollMode.vertical),
+        SizedBox(
+          width: double.infinity,
+          child: SegmentedButton<ScrollMode>(
+            segments: [
+              ButtonSegment<ScrollMode>(
+                value: ScrollMode.vertical,
+                label: Text(l10n.vertical),
+                icon: const Icon(Icons.unfold_more_rounded),
               ),
-              _buildCompactModeButton(
-                icon: Icons.unfold_less_rounded,
-                isSelected: settings.scrollMode == ScrollMode.horizontal,
-                theme: theme,
-                onTap: () => notifier.updateScrollMode(ScrollMode.horizontal),
+              ButtonSegment<ScrollMode>(
+                value: ScrollMode.horizontal,
+                label: Text(l10n.horizontal),
+                icon: const Icon(Icons.unfold_less_rounded),
               ),
             ],
+            selected: {settings.scrollMode},
+            onSelectionChanged: (Set<ScrollMode> newSelection) {
+              HapticFeedback.selectionClick();
+              notifier.updateScrollMode(newSelection.first);
+            },
+            showSelectedIcon: false,
+            style: _segmentedButtonStyle(theme),
           ),
         ),
       ],
     );
   }
 
-  /// Builds a compact toggle button for navigation modes.
-  Widget _buildCompactModeButton({
-    required IconData icon,
-    required bool isSelected,
-    required ReaderTheme theme,
-    required VoidCallback onTap,
-  }) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: () {
-          HapticFeedback.selectionClick();
-          onTap();
-        },
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          decoration: BoxDecoration(
-            color: isSelected ? theme.backgroundColor : Colors.transparent,
-            borderRadius: BorderRadius.circular(8),
-            boxShadow: isSelected
-                ? [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 4, offset: const Offset(0, 2))]
-                : [],
-          ),
-          child: Icon(
-            icon,
-            size: 20,
-            color: isSelected ? theme.accentColor : theme.textColor.withValues(alpha: 0.3),
-          ),
-        ),
-      ),
-    );
-  }
-
   /// Builds the text alignment section.
-  Widget _buildTextAlignSection(ReadingSettings settings, SettingsNotifier notifier, ReaderTheme theme, ReaderLocalizations l10n) {
+  Widget _buildTextAlignSection(
+    ReadingSettings settings,
+    SettingsNotifier notifier,
+    ReaderTheme theme,
+    ReaderLocalizations l10n,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -395,58 +457,64 @@ class SettingsPanel extends ConsumerWidget {
           ),
         ),
         const SizedBox(height: 12),
-        Container(
-          padding: const EdgeInsets.all(4),
-          decoration: BoxDecoration(
-            color: theme.textColor.withValues(alpha: 0.05),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Row(
-            children: [
-              _buildAlignButton(TextAlign.left, Icons.format_align_left_rounded, settings, notifier, theme),
-              _buildAlignButton(TextAlign.center, Icons.format_align_center_rounded, settings, notifier, theme),
-              _buildAlignButton(TextAlign.right, Icons.format_align_right_rounded, settings, notifier, theme),
-              _buildAlignButton(TextAlign.justify, Icons.format_align_justify_rounded, settings, notifier, theme),
+        SizedBox(
+          width: double.infinity,
+          child: SegmentedButton<TextAlign>(
+            segments: const [
+              ButtonSegment<TextAlign>(
+                value: TextAlign.left,
+                icon: Icon(Icons.format_align_left_rounded),
+              ),
+              ButtonSegment<TextAlign>(
+                value: TextAlign.center,
+                icon: Icon(Icons.format_align_center_rounded),
+              ),
+              ButtonSegment<TextAlign>(
+                value: TextAlign.right,
+                icon: Icon(Icons.format_align_right_rounded),
+              ),
+              ButtonSegment<TextAlign>(
+                value: TextAlign.justify,
+                icon: Icon(Icons.format_align_justify_rounded),
+              ),
             ],
+            selected: {settings.textAlign},
+            onSelectionChanged: (Set<TextAlign> newSelection) {
+              HapticFeedback.selectionClick();
+              notifier.updateTextAlign(newSelection.first);
+            },
+            showSelectedIcon: false,
+            style: _segmentedButtonStyle(theme),
           ),
         ),
       ],
     );
   }
 
-  /// Builds an alignment toggle button.
-  Widget _buildAlignButton(TextAlign align, IconData icon, ReadingSettings settings, SettingsNotifier notifier, ReaderTheme theme) {
-    final isSelected = settings.textAlign == align;
-    return Expanded(
-      child: GestureDetector(
-        onTap: () {
-          HapticFeedback.selectionClick();
-          notifier.updateTextAlign(align);
-        },
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          decoration: BoxDecoration(
-            color: isSelected ? theme.backgroundColor : Colors.transparent,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Icon(
-            icon,
-            size: 18,
-            color: isSelected ? theme.accentColor : theme.textColor.withValues(alpha: 0.3),
-          ),
-        ),
-      ),
+  ButtonStyle _segmentedButtonStyle(ReaderTheme theme) {
+    return SegmentedButton.styleFrom(
+      selectedBackgroundColor: theme.accentColor,
+      selectedForegroundColor: Colors.white,
+      foregroundColor: theme.textColor.withValues(alpha: 0.4),
+      backgroundColor: theme.textColor.withValues(alpha: 0.05),
+      side: BorderSide.none,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      visualDensity: VisualDensity.compact,
     );
   }
 
   /// Builds the line height/spacing adjustment section.
-  Widget _buildSpacingSection(ReadingSettings settings, SettingsNotifier notifier, ReaderTheme theme, ReaderLocalizations l10n) {
+  Widget _buildSpacingSection(
+    ReadingSettings settings,
+    SettingsNotifier notifier,
+    ReaderTheme theme,
+    ReaderLocalizations l10n,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          l10n.lineSpacing.toUpperCase(),
+          l10n.lineSpacing,
           style: TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w900,
@@ -461,7 +529,10 @@ class SettingsPanel extends ConsumerWidget {
             inactiveTrackColor: theme.textColor.withValues(alpha: 0.05),
             thumbColor: Colors.white,
             trackHeight: 4,
-            thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8, elevation: 3),
+            thumbShape: const RoundSliderThumbShape(
+              enabledThumbRadius: 8,
+              elevation: 3,
+            ),
           ),
           child: Slider(
             value: settings.lineHeight,
@@ -475,7 +546,12 @@ class SettingsPanel extends ConsumerWidget {
   }
 
   /// Builds system-level hardware controls (Brightness, etc.).
-  Widget _buildSystemSection(ReadingSettings settings, SettingsNotifier notifier, ReaderTheme theme, ReaderLocalizations l10n) {
+  Widget _buildSystemSection(
+    ReadingSettings settings,
+    SettingsNotifier notifier,
+    ReaderTheme theme,
+    ReaderLocalizations l10n,
+  ) {
     return Column(
       children: [
         _buildSystemSwitch(
@@ -495,7 +571,11 @@ class SettingsPanel extends ConsumerWidget {
         const SizedBox(height: 16),
         Row(
           children: [
-            Icon(Icons.brightness_low_rounded, size: 18, color: theme.textColor.withValues(alpha: 0.3)),
+            Icon(
+              Icons.brightness_low_rounded,
+              size: 18,
+              color: theme.textColor.withValues(alpha: 0.3),
+            ),
             Expanded(
               child: SliderTheme(
                 data: SliderThemeData(
@@ -503,7 +583,10 @@ class SettingsPanel extends ConsumerWidget {
                   inactiveTrackColor: theme.textColor.withValues(alpha: 0.05),
                   thumbColor: Colors.white,
                   trackHeight: 4,
-                  thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8, elevation: 3),
+                  thumbShape: const RoundSliderThumbShape(
+                    enabledThumbRadius: 8,
+                    elevation: 3,
+                  ),
                 ),
                 child: Slider(
                   value: settings.brightness,
@@ -513,7 +596,11 @@ class SettingsPanel extends ConsumerWidget {
                 ),
               ),
             ),
-            Icon(Icons.brightness_high_rounded, size: 18, color: theme.textColor.withValues(alpha: 0.3)),
+            Icon(
+              Icons.brightness_high_rounded,
+              size: 18,
+              color: theme.textColor.withValues(alpha: 0.3),
+            ),
           ],
         ),
       ],
@@ -537,7 +624,11 @@ class SettingsPanel extends ConsumerWidget {
           Expanded(
             child: Text(
               label,
-              style: TextStyle(color: theme.textColor, fontWeight: FontWeight.w600, fontSize: 14),
+              style: TextStyle(
+                color: theme.textColor,
+                fontWeight: FontWeight.w600,
+                fontSize: 14,
+              ),
             ),
           ),
           Switch.adaptive(

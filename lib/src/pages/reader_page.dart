@@ -59,16 +59,10 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
     super.dispose();
   }
 
-  TapDownDetails? _lastTapDown;
-
   /// Handles single-tap events to toggle controls or navigate.
-  void _handleTap() {
-    if (_lastTapDown == null) {
-      return;
-    }
-    
+  void _handleTapAt(Offset position) {
     final width = MediaQuery.of(context).size.width;
-    final x = _lastTapDown!.globalPosition.dx;
+    final x = position.dx;
     final settings = ref.read(settingsProvider);
 
     if (x > width * 0.3 && x < width * 0.7) {
@@ -76,22 +70,32 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
     } else if (settings.scrollMode == ScrollMode.horizontal) {
       if (_pageController.hasClients) {
         if (x <= width * 0.3) {
-          _pageController.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+          _pageController.previousPage(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          );
         } else {
-          _pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+          _pageController.nextPage(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          );
         }
       }
     } else {
       if (_scrollController.hasClients) {
         if (x <= width * 0.3) {
           _scrollController.animateTo(
-            (_scrollController.offset - MediaQuery.of(context).size.height * 0.8).clamp(0, _scrollController.position.maxScrollExtent),
+            (_scrollController.offset -
+                    MediaQuery.of(context).size.height * 0.8)
+                .clamp(0, _scrollController.position.maxScrollExtent),
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
           );
         } else {
           _scrollController.animateTo(
-            (_scrollController.offset + MediaQuery.of(context).size.height * 0.8).clamp(0, _scrollController.position.maxScrollExtent),
+            (_scrollController.offset +
+                    MediaQuery.of(context).size.height * 0.8)
+                .clamp(0, _scrollController.position.maxScrollExtent),
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
           );
@@ -112,7 +116,9 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
   void _handleNext() {
     final readingState = ref.read(readingProvider);
     if (readingState.currentChapterIndex < widget.config.chapters.length - 1) {
-      ref.read(readingProvider.notifier).updateChapter(readingState.currentChapterIndex + 1);
+      ref
+          .read(readingProvider.notifier)
+          .updateChapter(readingState.currentChapterIndex + 1);
       widget.onNextChapter?.call();
     }
   }
@@ -121,7 +127,9 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
   void _handlePrevious() {
     final readingState = ref.read(readingProvider);
     if (readingState.currentChapterIndex > 0) {
-      ref.read(readingProvider.notifier).updateChapter(readingState.currentChapterIndex - 1);
+      ref
+          .read(readingProvider.notifier)
+          .updateChapter(readingState.currentChapterIndex - 1);
       widget.onPreviousChapter?.call();
     }
   }
@@ -148,27 +156,29 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
     }
 
     final isFirstChapter = readingState.currentChapterIndex == 0;
-    final isLastChapter = readingState.currentChapterIndex == widget.config.chapters.length - 1;
+    final isLastChapter =
+        readingState.currentChapterIndex == widget.config.chapters.length - 1;
 
     Widget body = Column(
       children: [
         AnimatedSize(
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeInOut,
-          child: _showControls
-              ? ReaderAppBar(
-                  title: widget.config.title,
-                  theme: theme,
-                  onSettingsTap: () => _showSettings(context),
-                  chapters: widget.config.chapters,
-                )
-              : const SizedBox.shrink(),
+          child:
+              _showControls
+                  ? ReaderAppBar(
+                    title: widget.config.title,
+                    theme: theme,
+                    onSettingsTap: () => _showSettings(context),
+                    chapters: widget.config.chapters,
+                  )
+                  : const SizedBox.shrink(),
         ),
         Expanded(
           child: GestureDetector(
-            onTapDown: (details) => _lastTapDown = details,
-            onTap: _handleTap,
-            behavior: HitTestBehavior.opaque,
+            key: const Key('reader_gesture_handler'),
+            onTapUp: (details) => _handleTapAt(details.globalPosition),
+            behavior: HitTestBehavior.translucent,
             child: ReadingArea(
               config: widget.config,
               settings: settings,
@@ -181,37 +191,47 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
         AnimatedSize(
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeInOut,
-          child: _showControls
-              ? ReaderBottomBar(
-                  theme: theme,
-                  currentChapterIndex: readingState.currentChapterIndex,
-                  totalChapters: widget.config.chapters.length,
-                  onChapterChanged: (index) {
-                    ref.read(readingProvider.notifier).updateChapter(index);
-                  },
-                  onPreviousChapter: isFirstChapter ? null : _handlePrevious,
-                  onNextChapter: isLastChapter ? null : _handleNext,
-                  scrollController: _scrollController,
-                )
-              : const SizedBox.shrink(),
+          child:
+              _showControls
+                  ? ReaderBottomBar(
+                    theme: theme,
+                    currentChapterIndex: readingState.currentChapterIndex,
+                    totalChapters: widget.config.chapters.length,
+                    onChapterChanged: (index) {
+                      ref.read(readingProvider.notifier).updateChapter(index);
+                    },
+                    onPreviousChapter: isFirstChapter ? null : _handlePrevious,
+                    onNextChapter: isLastChapter ? null : _handleNext,
+                    scrollController: _scrollController,
+                  )
+                  : const SizedBox.shrink(),
         ),
       ],
     );
 
     final platform = Theme.of(context).platform;
-    if (kIsWeb || platform == TargetPlatform.windows || platform == TargetPlatform.macOS || platform == TargetPlatform.linux) {
+    if (kIsWeb ||
+        platform == TargetPlatform.windows ||
+        platform == TargetPlatform.macOS ||
+        platform == TargetPlatform.linux) {
       body = CallbackShortcuts(
         bindings: {
           const SingleActivator(LogicalKeyboardKey.arrowRight): () {
             if (settings.scrollMode == ScrollMode.horizontal) {
-              _pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+              _pageController.nextPage(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+              );
             } else {
               _handleNext();
             }
           },
           const SingleActivator(LogicalKeyboardKey.arrowLeft): () {
             if (settings.scrollMode == ScrollMode.horizontal) {
-              _pageController.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+              _pageController.previousPage(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+              );
             } else {
               _handlePrevious();
             }
@@ -225,16 +245,17 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
             }
           },
           const SingleActivator(LogicalKeyboardKey.equal, control: true): () {
-            ref.read(settingsProvider.notifier).updateFontSize(settings.fontSize + 1);
+            ref
+                .read(settingsProvider.notifier)
+                .updateFontSize(settings.fontSize + 1);
           },
           const SingleActivator(LogicalKeyboardKey.minus, control: true): () {
-            ref.read(settingsProvider.notifier).updateFontSize(settings.fontSize - 1);
+            ref
+                .read(settingsProvider.notifier)
+                .updateFontSize(settings.fontSize - 1);
           },
         },
-        child: Focus(
-          autofocus: true,
-          child: body,
-        ),
+        child: Focus(autofocus: true, child: body),
       );
     }
 
@@ -250,10 +271,7 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
       );
     }
 
-    return Scaffold(
-      backgroundColor: theme.backgroundColor,
-      body: body,
-    );
+    return Scaffold(backgroundColor: theme.backgroundColor, body: body);
   }
 
   /// Shows the reading settings bottom sheet.
@@ -262,10 +280,11 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
-      builder: (context) => UncontrolledProviderScope(
-        container: container,
-        child: const SettingsPanel(),
-      ),
+      builder:
+          (context) => UncontrolledProviderScope(
+            container: container,
+            child: const SettingsPanel(),
+          ),
     );
   }
 }

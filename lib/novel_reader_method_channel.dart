@@ -12,7 +12,9 @@ class MethodChannelNovelReader extends NovelReaderPlatform {
   /// Invokes the native method to get the platform version.
   @override
   Future<String?> getPlatformVersion() async {
-    final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
+    final version = await methodChannel.invokeMethod<String>(
+      'getPlatformVersion',
+    );
     return version;
   }
 }

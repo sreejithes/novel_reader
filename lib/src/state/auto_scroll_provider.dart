@@ -2,7 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final autoScrollProvider = StateNotifierProvider<AutoScrollNotifier, bool>((ref) {
+final autoScrollProvider = StateNotifierProvider<AutoScrollNotifier, bool>((
+  ref,
+) {
   return AutoScrollNotifier();
 });
 

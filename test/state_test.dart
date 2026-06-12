@@ -16,20 +16,20 @@ void main() {
     test('SettingsNotifier updates font size', () async {
       final container = ProviderContainer();
       // We don't dispose immediately to avoid async race conditions with _saveSettings
-      
+
       final notifier = container.read(settingsProvider.notifier);
       notifier.updateFontSize(20.0);
-      
+
       final state = container.read(settingsProvider);
       expect(state.fontSize, 20.0);
     });
 
     test('SettingsNotifier updates theme mode', () async {
       final container = ProviderContainer();
-      
+
       final notifier = container.read(settingsProvider.notifier);
       notifier.updateThemeMode(ReaderThemeMode.dark);
-      
+
       final state = container.read(settingsProvider);
       expect(state.themeMode, ReaderThemeMode.dark);
     });
@@ -42,10 +42,10 @@ void main() {
 
     test('ReadingNotifier updates chapter index', () async {
       final container = ProviderContainer();
-      
+
       final notifier = container.read(readingProvider.notifier);
       notifier.updateChapter(2);
-      
+
       final state = container.read(readingProvider);
       expect(state.currentChapterIndex, 2);
     });

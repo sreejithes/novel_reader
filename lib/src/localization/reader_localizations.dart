@@ -33,82 +33,65 @@ class ReaderLocalizations {
       'clear': 'Clear',
       'noResults': 'No results found',
     },
-    'es': {
-      'settings': 'Ajustes',
-      'fontSize': 'Tamaño de fuente',
-      'theme': 'Tema',
-      'fontFamily': 'Familia de fuentes',
-      'lineSpacing': 'Interlineado',
-      'navigationMode': 'Modo de navegación',
-      'vertical': 'Vertical',
-      'horizontal': 'Horizontal',
-      'keepAwake': 'Mantener pantalla encendida',
-      'hideStatusBar': 'Ocultar barra de estado',
-      'brightness': 'Brillo',
-      'previous': 'Anterior',
-      'next': 'Siguiente',
-      'search': 'Buscar',
-      'clear': 'Limpiar',
-      'noResults': 'No se encontraron resultados',
-    },
   };
 
   /// Localized string for 'Settings'.
-  String get settings => _localizedValues[locale.languageCode]?['settings'] ?? _localizedValues['en']!['settings']!;
+  String get settings => _localizedValues['en']!['settings']!;
 
   /// Localized string for 'Font Size'.
-  String get fontSize => _localizedValues[locale.languageCode]?['fontSize'] ?? _localizedValues['en']!['fontSize']!;
+  String get fontSize => _localizedValues['en']!['fontSize']!;
 
   /// Localized string for 'Theme'.
-  String get theme => _localizedValues[locale.languageCode]?['theme'] ?? _localizedValues['en']!['theme']!;
+  String get theme => _localizedValues['en']!['theme']!;
 
   /// Localized string for 'Font Family'.
-  String get fontFamily => _localizedValues[locale.languageCode]?['fontFamily'] ?? _localizedValues['en']!['fontFamily']!;
+  String get fontFamily => _localizedValues['en']!['fontFamily']!;
 
   /// Localized string for 'Line Spacing'.
-  String get lineSpacing => _localizedValues[locale.languageCode]?['lineSpacing'] ?? _localizedValues['en']!['lineSpacing']!;
+  String get lineSpacing => _localizedValues['en']!['lineSpacing']!;
 
   /// Localized string for 'Navigation Mode'.
-  String get navigationMode => _localizedValues[locale.languageCode]?['navigationMode'] ?? _localizedValues['en']!['navigationMode']!;
+  String get navigationMode => _localizedValues['en']!['navigationMode']!;
 
   /// Localized string for 'Vertical'.
-  String get vertical => _localizedValues[locale.languageCode]?['vertical'] ?? _localizedValues['en']!['vertical']!;
+  String get vertical => _localizedValues['en']!['vertical']!;
 
   /// Localized string for 'Horizontal'.
-  String get horizontal => _localizedValues[locale.languageCode]?['horizontal'] ?? _localizedValues['en']!['horizontal']!;
+  String get horizontal => _localizedValues['en']!['horizontal']!;
 
   /// Localized string for 'Keep Screen Awake'.
-  String get keepAwake => _localizedValues[locale.languageCode]?['keepAwake'] ?? _localizedValues['en']!['keepAwake']!;
+  String get keepAwake => _localizedValues['en']!['keepAwake']!;
 
   /// Localized string for 'Hide Status Bar'.
-  String get hideStatusBar => _localizedValues[locale.languageCode]?['hideStatusBar'] ?? _localizedValues['en']!['hideStatusBar']!;
+  String get hideStatusBar => _localizedValues['en']!['hideStatusBar']!;
 
   /// Localized string for 'Brightness'.
-  String get brightness => _localizedValues[locale.languageCode]?['brightness'] ?? _localizedValues['en']!['brightness']!;
+  String get brightness => _localizedValues['en']!['brightness']!;
 
   /// Localized string for 'Previous'.
-  String get previous => _localizedValues[locale.languageCode]?['previous'] ?? _localizedValues['en']!['previous']!;
+  String get previous => _localizedValues['en']!['previous']!;
 
   /// Localized string for 'Next'.
-  String get next => _localizedValues[locale.languageCode]?['next'] ?? _localizedValues['en']!['next']!;
+  String get next => _localizedValues['en']!['next']!;
 
   /// Localized string for 'Search'.
-  String get search => _localizedValues[locale.languageCode]?['search'] ?? _localizedValues['en']!['search']!;
+  String get search => _localizedValues['en']!['search']!;
 
   /// Localized string for 'Clear'.
-  String get clear => _localizedValues[locale.languageCode]?['clear'] ?? _localizedValues['en']!['clear']!;
+  String get clear => _localizedValues['en']!['clear']!;
 
   /// Localized string for 'No results found'.
-  String get noResults => _localizedValues[locale.languageCode]?['noResults'] ?? _localizedValues['en']!['noResults']!;
+  String get noResults => _localizedValues['en']!['noResults']!;
 }
 
 /// [LocalizationsDelegate] for [ReaderLocalizations].
-class ReaderLocalizationsDelegate extends LocalizationsDelegate<ReaderLocalizations> {
+class ReaderLocalizationsDelegate
+    extends LocalizationsDelegate<ReaderLocalizations> {
   /// Creates a [ReaderLocalizationsDelegate] instance.
   const ReaderLocalizationsDelegate();
 
   @override
-  bool isSupported(Locale locale) => ['en', 'es'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => ['en'].contains(locale.languageCode);
 
   @override
   Future<ReaderLocalizations> load(Locale locale) {

@@ -1,38 +1,53 @@
-# Advanced Novel Reader
+# Advanced Novel Reader 📖
 
 [![pub package](https://img.shields.io/pub/v/novel_reader.svg)](https://pub.dev/packages/novel_reader)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-A professional-grade, highly customizable Novel/Ebook Reader package for Flutter. Designed for high-performance reading experiences with a focus on premium typography and an immersive, focus-driven UI.
+A professional-grade, highly customizable **Novel & Ebook Reader** package for Flutter. Designed for high-performance reading experiences with a focus on premium typography and an immersive, distraction-free UI.
+
+---
 
 ## ✨ Features
 
-- 🎨 **Premium Theme System**: Optimized palettes for Light, Dark, Sepia, AMOLED, Cream, and Slate.
+- 🎨 **Adaptive Theme System**: Sophisticated pre-built palettes including:
+  - **Light & Dark**: Standard reading modes.
+  - **Sepia & Cream**: Eye-friendly classic book styles.
+  - **AMOLED**: Pure black for OLED efficiency.
+  - **Gray & Slate**: Low-contrast professional themes.
 - 📖 **Dual Navigation Modes**:
-  - **Fluid Vertical Scroll**: Smooth scrolling with chapter-by-chapter loading.
-  - **Horizontal Paging**: Physical e-reader style pagination with dynamic text fitting.
-- 🔠 **Advanced Typography**:
-  - Full Google Fonts integration.
-  - Granular control over font size, line height, and word spacing.
-  - Four-way text alignment (Left, Center, Right, Justify).
-- 📱 **Immersive UI**:
-  - Auto-hiding status bar and toolbars for zero distraction.
-  - Intelligent tap zones: Center to toggle UI, sides for navigation.
-  - Haptic feedback and smooth micro-animations.
-- 💾 **Smart Persistence**: Automatically remembers theme, font settings, reading position, and current chapter.
-- 🌍 **Localization**: Built-in support for multiple languages (English and Spanish included).
-- 🚀 **Multi-Platform**: Native optimizations for Android, iOS, Web, Windows, macOS, and Linux.
+  - **Fluid Vertical Scroll**: Standard continuous scrolling experience.
+  - **Horizontal Paging**: Physical e-reader style pagination with dynamic text fitting based on screen size.
+- 🔠 **Premium Typography**:
+  - Full **Google Fonts** integration.
+  - Granular control over **font size** (12px to 36px), **line height**, and **letter spacing**.
+  - Four-way **text alignment**: Left, Center, Right, and Justify.
+- 📱 **Immersive Focus UI**:
+  - Automatically hides status bar and toolbars while reading.
+  - **Intelligent Tap Zones**: Center to toggle controls; sides for rapid navigation.
+  - **Haptic Feedback**: Native vibration responses on Android and iOS.
+- 💾 **State Persistence**: Automatically remembers and restores theme, font settings, and reading progress (current chapter and scroll position).
+- 🌍 **Localization**: Built-in support for multiple languages.
+- 🚀 **Multi-Platform**: Native optimizations for **Android, iOS, Web, Windows, macOS, and Linux**.
 
-## 🚀 Installation
+---
+
+## 🛠️ Installation
 
 Add `novel_reader` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  novel_reader: ^latest_version
+  novel_reader: ^1.0.0
 ```
 
-## 🛠️ Quick Start
+Then, run:
+```bash
+flutter pub get
+```
+
+---
+
+## 🚀 Quick Start
 
 ```dart
 import 'package:flutter/material.dart';
@@ -50,7 +65,7 @@ void main() {
             content: "In my younger and more vulnerable years...",
             order: 1,
           ),
-          // Add more chapters here
+          // Add more chapters for the full experience
         ],
       ),
     ),
@@ -58,40 +73,63 @@ void main() {
 }
 ```
 
+---
+
 ## ⚙️ Advanced Configuration
 
-### Localization
-To enable localized strings, add the `ReaderLocalizationsDelegate` to your `MaterialApp`:
+### 🌍 Localization
+To use the built-in localized strings, register the `ReaderLocalizationsDelegate` in your `MaterialApp`:
 
 ```dart
 MaterialApp(
-  localizationsDelegates: [
+  localizationsDelegates: const [
     ReaderLocalizationsDelegate(),
     GlobalMaterialLocalizations.delegate,
     GlobalWidgetsLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
   ],
-  supportedLocales: [
-    const Locale('en'),
-    const Locale('es'),
+  supportedLocales: const [
+    Locale('en'),
   ],
   home: MyReaderScreen(),
 )
 ```
 
-### Callbacks
-Listen to reader events to sync with your backend or analytics:
+### ⌨️ Desktop & Web Support
+On non-mobile platforms, the reader supports native keyboard shortcuts out of the box:
+- **Navigation**: `Arrow Right` / `Arrow Left`.
+- **Zoom Control**: `Ctrl +` and `Ctrl -` to adjust font size instantly.
+- **UI Toggle**: `Space` to show/hide bars, `Esc` to hide.
+
+### 📱 Mobile Specifics
+- **Haptic Feedback**: Integrated native vibrations for interactive settings.
+- **Hardware Controls**: Direct control over screen brightness and **"Keep Awake"** (WakeLock) via the settings panel.
+
+### 🔗 Event Callbacks
+Sync reading progress with your backend or analytics:
 
 ```dart
 NovelReader(
   config: myConfig,
   onChapterChanged: (index) => print("User moved to chapter $index"),
-  onThemeChanged: (mode) => print("Theme changed to $mode"),
+  onThemeChanged: (mode) => print("Theme updated to $mode"),
+  onNextChapter: () => print("User clicked next"),
 )
 ```
 
+---
+
 ## 🏗️ Architecture
 
-Built on **Riverpod** for robust state management and **Shared Preferences** for lightweight data persistence. The package follows a clean, modular architecture that is easy to extend and maintain.
+Built on **Riverpod** for robust state management and **Shared Preferences** for lightweight data persistence. The package follows a clean, modular architecture separating models, state, and specialized widgets, making it easy to extend for custom needs.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! If you find a bug or have a feature request, please open an issue on GitHub. Pull requests are also appreciated.
+
+---
 
 ## 📄 License
 

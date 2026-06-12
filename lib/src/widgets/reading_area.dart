@@ -44,20 +44,31 @@ class ReadingArea extends ConsumerWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         if (settings.scrollMode == ScrollMode.horizontal) {
-          return _buildHorizontalPagedView(context, constraints, readingState.currentChapterIndex);
+          return _buildHorizontalPagedView(
+            context,
+            constraints,
+            readingState.currentChapterIndex,
+          );
         }
-        return _buildVerticalScrollView(context, readingState.currentChapterIndex);
+        return _buildVerticalScrollView(
+          context,
+          readingState.currentChapterIndex,
+        );
       },
     );
   }
 
   /// Builds a vertically scrollable view for a single chapter.
-  Widget _buildVerticalScrollView(BuildContext context, int currentChapterIndex) {
+  Widget _buildVerticalScrollView(
+    BuildContext context,
+    int currentChapterIndex,
+  ) {
     final chapter = config.chapters[currentChapterIndex];
     final platform = Theme.of(context).platform;
-    final platformPhysics = (platform == TargetPlatform.iOS || platform == TargetPlatform.macOS)
-        ? const BouncingScrollPhysics()
-        : const ClampingScrollPhysics();
+    final platformPhysics =
+        (platform == TargetPlatform.iOS || platform == TargetPlatform.macOS)
+            ? const BouncingScrollPhysics()
+            : const ClampingScrollPhysics();
 
     return SingleChildScrollView(
       controller: controller,
@@ -65,10 +76,7 @@ class ReadingArea extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(
-            top: 16,
-            bottom: 32,
-          ),
+          padding: const EdgeInsets.only(top: 16, bottom: 32),
           child: _buildChapterContent(chapter),
         ),
       ),
@@ -76,7 +84,11 @@ class ReadingArea extends ConsumerWidget {
   }
 
   /// Builds a horizontally paged view for a single chapter.
-  Widget _buildHorizontalPagedView(BuildContext context, BoxConstraints constraints, int currentChapterIndex) {
+  Widget _buildHorizontalPagedView(
+    BuildContext context,
+    BoxConstraints constraints,
+    int currentChapterIndex,
+  ) {
     final chapterPages = <Map<String, dynamic>>[];
     final textStyle = _getFont(settings.fontFamily).copyWith(
       fontSize: settings.fontSize,
@@ -91,15 +103,15 @@ class ReadingArea extends ConsumerWidget {
       chapter.content,
       textStyle,
       constraints.maxWidth - 48,
-      constraints.maxHeight - MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom - 120,
+      constraints.maxHeight -
+          MediaQuery.of(context).padding.top -
+          MediaQuery.of(context).padding.bottom -
+          120,
       settings.textAlign,
     );
 
     for (var pageContent in pages) {
-      chapterPages.add({
-        'content': pageContent,
-        'chapterTitle': chapter.title,
-      });
+      chapterPages.add({'content': pageContent, 'chapterTitle': chapter.title});
     }
 
     return PageView.builder(
@@ -118,62 +130,64 @@ class ReadingArea extends ConsumerWidget {
               bottom: 20,
             ),
             child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Text(
-                      page['chapterTitle'],
-                      style: TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w800,
-                        color: theme.textColor.withValues(alpha: 0.3),
-                        letterSpacing: 1.5,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        page['chapterTitle'],
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w800,
+                          color: theme.textColor.withValues(alpha: 0.3),
+                          letterSpacing: 1.5,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
-              Expanded(
-                child: AnimatedDefaultTextStyle(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                  style: textStyle,
-                  textAlign: settings.textAlign,
-                  child: Text(
-                    page['content'],
+                  ],
+                ),
+                const SizedBox(height: 24),
+                Expanded(
+                  child: AnimatedDefaultTextStyle(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                    style: textStyle,
+                    textAlign: settings.textAlign,
+                    child: Text(page['content']),
                   ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: theme.textColor.withValues(alpha: 0.05),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Text(
-                      '${index + 1} / ${chapterPages.length}',
-                      style: TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                        color: theme.textColor.withValues(alpha: 0.4),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: theme.textColor.withValues(alpha: 0.05),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        '${index + 1} / ${chapterPages.length}',
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          color: theme.textColor.withValues(alpha: 0.4),
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
-        ));
+        );
       },
     );
   }
@@ -212,9 +226,7 @@ class ReadingArea extends ConsumerWidget {
             color: theme.textColor,
           ),
           textAlign: settings.textAlign,
-          child: Text(
-            chapter.content,
-          ),
+          child: Text(chapter.content),
         ),
       ],
     );

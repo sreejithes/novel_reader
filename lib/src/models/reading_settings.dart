@@ -21,7 +21,7 @@ enum ReaderThemeMode {
   gray,
 
   /// User-defined custom theme.
-  custom
+  custom,
 }
 
 /// Defines how the content is navigated.
@@ -30,7 +30,7 @@ enum ScrollMode {
   vertical,
 
   /// Content is split into screen-sized pages that are flipped horizontally.
-  horizontal
+  horizontal,
 }
 
 /// Holds all the user-customizable reading preferences.

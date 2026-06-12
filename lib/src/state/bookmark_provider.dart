@@ -4,9 +4,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/bookmark.dart';
 
 /// Provider for the list of user [Bookmark]s.
-final bookmarkProvider = StateNotifierProvider<BookmarkNotifier, List<Bookmark>>((ref) {
-  return BookmarkNotifier();
-});
+final bookmarkProvider =
+    StateNotifierProvider<BookmarkNotifier, List<Bookmark>>((ref) {
+      return BookmarkNotifier();
+    });
 
 /// Notifier that manages and persists user bookmarks.
 class BookmarkNotifier extends StateNotifier<List<Bookmark>> {

@@ -15,14 +15,14 @@ void main() {
         DefaultMaterialLocalizations.delegate,
         DefaultWidgetsLocalizations.delegate,
       ],
-      supportedLocales: const [
-        Locale('en'),
-      ],
+      supportedLocales: const [Locale('en')],
       home: child,
     );
   }
 
-  testWidgets('NovelReader displays chapter title and content', (WidgetTester tester) async {
+  testWidgets('NovelReader displays chapter title and content', (
+    WidgetTester tester,
+  ) async {
     final config = ReaderConfig(
       title: 'Test Book',
       chapters: [
@@ -37,10 +37,10 @@ void main() {
 
     // Pump the widget
     await tester.pumpWidget(createTestableWidget(NovelReader(config: config)));
-    
+
     // Initial pump for ProviderScope
     await tester.pump();
-    
+
     // Wait for any initial animations or state loading
     await tester.pumpAndSettle();
 
@@ -49,12 +49,12 @@ void main() {
     expect(find.text('This is the content of chapter one.'), findsOneWidget);
   });
 
-  testWidgets('NovelReader renders within a Scaffold', (WidgetTester tester) async {
+  testWidgets('NovelReader renders within a Scaffold', (
+    WidgetTester tester,
+  ) async {
     final config = ReaderConfig(
       title: 'Test Book',
-      chapters: [
-        Chapter(id: '1', title: 'C1', content: 'Content', order: 1),
-      ],
+      chapters: [Chapter(id: '1', title: 'C1', content: 'Content', order: 1)],
     );
 
     await tester.pumpWidget(createTestableWidget(NovelReader(config: config)));
