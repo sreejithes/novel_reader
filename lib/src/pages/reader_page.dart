@@ -137,139 +137,152 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
   @override
   Widget build(BuildContext context) {
     final readingState = ref.watch(readingProvider);
-    final settings = ref.watch(settingsProvider);
-    final theme = ReaderTheme.getTheme(settings.themeMode);
+    final settingsAsync = ref.watch(settingsInitializerProvider);
 
-    ref.listen(readingProvider, (previous, next) {
-      if (previous?.currentChapterIndex != next.currentChapterIndex) {
-        widget.onChapterChanged?.call(next.currentChapterIndex);
-        if (_scrollController.hasClients) {
-          _scrollController.jumpTo(0);
-        }
-      }
-    });
+    return settingsAsync.when(
+      loading: () => Scaffold(
+        backgroundColor: Colors.black, // Neutral background while loading
+        body: const Center(child: CircularProgressIndicator()),
+      ),
+      error: (err, stack) => Scaffold(
+        body: Center(child: Text('Error loading settings: $err')),
+      ),
+      data: (_) {
+        final settings = ref.watch(settingsProvider);
+        final theme = ReaderTheme.getTheme(settings.themeMode);
 
-    if (settings.hideStatusBar || !_showControls) {
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-    } else {
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    }
-
-    final isFirstChapter = readingState.currentChapterIndex == 0;
-    final isLastChapter =
-        readingState.currentChapterIndex == widget.config.chapters.length - 1;
-
-    Widget body = Column(
-      children: [
-        AnimatedSize(
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-          child: _showControls
-              ? ReaderAppBar(
-                  title: widget.config.title,
-                  theme: theme,
-                  onSettingsTap: () => _showSettings(context),
-                  chapters: widget.config.chapters,
-                )
-              : const SizedBox.shrink(),
-        ),
-        Expanded(
-          child: GestureDetector(
-            key: const Key('reader_gesture_handler'),
-            onTapUp: (details) => _handleTapAt(details.globalPosition),
-            behavior: HitTestBehavior.translucent,
-            child: ReadingArea(
-              config: widget.config,
-              settings: settings,
-              theme: theme,
-              controller: _scrollController,
-              pageController: _pageController,
-            ),
-          ),
-        ),
-        AnimatedSize(
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-          child: _showControls
-              ? ReaderBottomBar(
-                  theme: theme,
-                  currentChapterIndex: readingState.currentChapterIndex,
-                  totalChapters: widget.config.chapters.length,
-                  onChapterChanged: (index) {
-                    ref.read(readingProvider.notifier).updateChapter(index);
-                  },
-                  onPreviousChapter: isFirstChapter ? null : _handlePrevious,
-                  onNextChapter: isLastChapter ? null : _handleNext,
-                  scrollController: _scrollController,
-                )
-              : const SizedBox.shrink(),
-        ),
-      ],
-    );
-
-    final platform = Theme.of(context).platform;
-    if (kIsWeb ||
-        platform == TargetPlatform.windows ||
-        platform == TargetPlatform.macOS ||
-        platform == TargetPlatform.linux) {
-      body = CallbackShortcuts(
-        bindings: {
-          const SingleActivator(LogicalKeyboardKey.arrowRight): () {
-            if (settings.scrollMode == ScrollMode.horizontal) {
-              _pageController.nextPage(
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-              );
-            } else {
-              _handleNext();
+        ref.listen(readingProvider, (previous, next) {
+          if (previous?.currentChapterIndex != next.currentChapterIndex) {
+            widget.onChapterChanged?.call(next.currentChapterIndex);
+            if (_scrollController.hasClients) {
+              _scrollController.jumpTo(0);
             }
-          },
-          const SingleActivator(LogicalKeyboardKey.arrowLeft): () {
-            if (settings.scrollMode == ScrollMode.horizontal) {
-              _pageController.previousPage(
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-              );
-            } else {
-              _handlePrevious();
-            }
-          },
-          const SingleActivator(LogicalKeyboardKey.pageDown): _handleNext,
-          const SingleActivator(LogicalKeyboardKey.pageUp): _handlePrevious,
-          const SingleActivator(LogicalKeyboardKey.space): _toggleControls,
-          const SingleActivator(LogicalKeyboardKey.escape): () {
-            if (_showControls) {
-              _toggleControls();
-            }
-          },
-          const SingleActivator(LogicalKeyboardKey.equal, control: true): () {
-            ref
-                .read(settingsProvider.notifier)
-                .updateFontSize(settings.fontSize + 1);
-          },
-          const SingleActivator(LogicalKeyboardKey.minus, control: true): () {
-            ref
-                .read(settingsProvider.notifier)
-                .updateFontSize(settings.fontSize - 1);
-          },
-        },
-        child: Focus(autofocus: true, child: body),
-      );
-    }
-
-    if (platform == TargetPlatform.android) {
-      body = PopScope(
-        canPop: !_showControls,
-        onPopInvokedWithResult: (didPop, result) {
-          if (!didPop && _showControls) {
-            _toggleControls();
           }
-        },
-        child: body,
-      );
-    }
+        });
 
-    return Scaffold(backgroundColor: theme.backgroundColor, body: body);
+        if (settings.hideStatusBar || !_showControls) {
+          SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+        } else {
+          SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+        }
+
+        final isFirstChapter = readingState.currentChapterIndex == 0;
+        final isLastChapter =
+            readingState.currentChapterIndex == widget.config.chapters.length - 1;
+
+        Widget body = Column(
+          children: [
+            AnimatedSize(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              child: _showControls
+                  ? ReaderAppBar(
+                      title: widget.config.title,
+                      theme: theme,
+                      onSettingsTap: () => _showSettings(context),
+                      chapters: widget.config.chapters,
+                    )
+                  : const SizedBox.shrink(),
+            ),
+            Expanded(
+              child: GestureDetector(
+                key: const Key('reader_gesture_handler'),
+                onTapUp: (details) => _handleTapAt(details.globalPosition),
+                behavior: HitTestBehavior.translucent,
+                child: ReadingArea(
+                  config: widget.config,
+                  settings: settings,
+                  theme: theme,
+                  controller: _scrollController,
+                  pageController: _pageController,
+                ),
+              ),
+            ),
+            AnimatedSize(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              child: _showControls
+                  ? ReaderBottomBar(
+                      theme: theme,
+                      currentChapterIndex: readingState.currentChapterIndex,
+                      totalChapters: widget.config.chapters.length,
+                      onChapterChanged: (index) {
+                        ref.read(readingProvider.notifier).updateChapter(index);
+                      },
+                      onPreviousChapter: isFirstChapter ? null : _handlePrevious,
+                      onNextChapter: isLastChapter ? null : _handleNext,
+                      scrollController: _scrollController,
+                    )
+                  : const SizedBox.shrink(),
+            ),
+          ],
+        );
+
+        final platform = Theme.of(context).platform;
+        if (kIsWeb ||
+            platform == TargetPlatform.windows ||
+            platform == TargetPlatform.macOS ||
+            platform == TargetPlatform.linux) {
+          body = CallbackShortcuts(
+            bindings: {
+              const SingleActivator(LogicalKeyboardKey.arrowRight): () {
+                if (settings.scrollMode == ScrollMode.horizontal) {
+                  _pageController.nextPage(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
+                } else {
+                  _handleNext();
+                }
+              },
+              const SingleActivator(LogicalKeyboardKey.arrowLeft): () {
+                if (settings.scrollMode == ScrollMode.horizontal) {
+                  _pageController.previousPage(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
+                } else {
+                  _handlePrevious();
+                }
+              },
+              const SingleActivator(LogicalKeyboardKey.pageDown): _handleNext,
+              const SingleActivator(LogicalKeyboardKey.pageUp): _handlePrevious,
+              const SingleActivator(LogicalKeyboardKey.space): _toggleControls,
+              const SingleActivator(LogicalKeyboardKey.escape): () {
+                if (_showControls) {
+                  _toggleControls();
+                }
+              },
+              const SingleActivator(LogicalKeyboardKey.equal, control: true): () {
+                ref
+                    .read(settingsProvider.notifier)
+                    .updateFontSize(settings.fontSize + 1);
+              },
+              const SingleActivator(LogicalKeyboardKey.minus, control: true): () {
+                ref
+                    .read(settingsProvider.notifier)
+                    .updateFontSize(settings.fontSize - 1);
+              },
+            },
+            child: Focus(autofocus: true, child: body),
+          );
+        }
+
+        if (platform == TargetPlatform.android) {
+          body = PopScope(
+            canPop: !_showControls,
+            onPopInvokedWithResult: (didPop, result) {
+              if (!didPop && _showControls) {
+                _toggleControls();
+              }
+            },
+            child: body,
+          );
+        }
+
+        return Scaffold(backgroundColor: theme.backgroundColor, body: body);
+      },
+    );
   }
 
   /// Shows the reading settings bottom sheet.

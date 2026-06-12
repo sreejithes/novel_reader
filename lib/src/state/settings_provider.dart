@@ -13,15 +13,27 @@ final settingsProvider =
   return SettingsNotifier();
 });
 
+/// Future provider to ensure settings are loaded before the UI renders.
+final settingsInitializerProvider = FutureProvider<void>((ref) async {
+  await ref.read(settingsProvider.notifier).loadSettings();
+});
+
 /// Notifier that manages reading settings and persists them to local storage.
 class SettingsNotifier extends StateNotifier<ReadingSettings> {
   /// Creates a [SettingsNotifier] and loads initial settings.
   SettingsNotifier() : super(ReadingSettings()) {
-    _loadSettings();
+    // We don't call _loadSettings here anymore to avoid the default state flash.
+    // Instead, we initialize from a future.
   }
 
+  /// Flag to track if settings have been loaded from disk.
+  bool _isInitialized = false;
+  bool get isInitialized => _isInitialized;
+
   /// Loads reading settings from [SharedPreferences].
-  Future<void> _loadSettings() async {
+  Future<void> loadSettings() async {
+    if (_isInitialized) return;
+
     final prefs = await SharedPreferences.getInstance();
     state = ReadingSettings(
       fontSize: prefs.getDouble('font_size') ?? 18.0,
@@ -34,6 +46,7 @@ class SettingsNotifier extends StateNotifier<ReadingSettings> {
       keepScreenAwake: prefs.getBool('keep_awake') ?? true,
       textAlign: TextAlign.values[prefs.getInt('text_align') ?? 0],
     );
+    _isInitialized = true;
     _applySystemSettings();
   }
 
