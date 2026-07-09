@@ -628,7 +628,14 @@ class SettingsPanel extends ConsumerWidget {
           ),
           Switch.adaptive(
             value: value,
-            activeColor: theme.accentColor,
+            thumbColor: WidgetStateProperty.resolveWith<Color?>((states) {
+              if (states.contains(WidgetState.selected)) return theme.accentColor;
+              return null;
+            }),
+            trackColor: WidgetStateProperty.resolveWith<Color?>((states) {
+              if (states.contains(WidgetState.selected)) return theme.accentColor.withValues(alpha: 0.5);
+              return null;
+            }),
             onChanged: (val) {
               HapticFeedback.lightImpact();
               onChanged(val);

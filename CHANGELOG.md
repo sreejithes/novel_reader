@@ -1,3 +1,11 @@
+## 1.0.2
+
+* **Web WASM Compatibility**: Removed `dart:io` dependencies to support Flutter's new WASM compilation target.
+* **Swift Package Manager (SPM) Support**: Added `Package.swift` for iOS and macOS, following the new Flutter plugin standard.
+* **Modernized Android Configuration**: Migrated to the modern Gradle plugins DSL and updated Kotlin configurations.
+* **Material 3 Compliance**: Resolved deprecation warnings for `Switch` widgets and updated to newer UI standards.
+* **Updated Dependencies**: Bumped multiple dependencies to their highest compatible versions for the current Dart SDK.
+
 ## 1.0.1
 
 * **Enhanced Reader Theme**: Expanded `ReaderTheme` with secondary text, surface, divider, and selection colors for more granular UI control.
