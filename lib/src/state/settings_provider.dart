@@ -1,9 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:screen_brightness/screen_brightness.dart';
-import 'package:wakelock_plus/wakelock_plus.dart';
+import '../utils/platform_service.dart';
 import '../models/reading_settings.dart';
 
 /// Provider for the [ReadingSettings] state.
@@ -51,20 +49,9 @@ class SettingsNotifier extends StateNotifier<ReadingSettings> {
 
   /// Applies system-level settings like brightness and wake lock.
   Future<void> _applySystemSettings() async {
-    try {
-      if (state.keepScreenAwake) {
-        await WakelockPlus.enable();
-      } else {
-        await WakelockPlus.disable();
-      }
-
-      if (!state.useSystemBrightness) {
-        await ScreenBrightness().setApplicationScreenBrightness(
-          state.brightness,
-        );
-      }
-    } catch (e) {
-      debugPrint('System settings not supported on this platform: $e');
+    PlatformService.instance.setWakelock(state.keepScreenAwake);
+    if (!state.useSystemBrightness) {
+      PlatformService.instance.setBrightness(state.brightness);
     }
   }
 
@@ -95,15 +82,7 @@ class SettingsNotifier extends StateNotifier<ReadingSettings> {
   /// Toggles the wake lock setting and persists the change.
   void toggleKeepAwake(bool value) {
     state = state.copyWith(keepScreenAwake: value);
-    try {
-      if (value) {
-        WakelockPlus.enable();
-      } else {
-        WakelockPlus.disable();
-      }
-    } catch (e) {
-      debugPrint('Wakelock not supported: $e');
-    }
+    PlatformService.instance.setWakelock(value);
     _saveSettings();
   }
 
@@ -122,11 +101,7 @@ class SettingsNotifier extends StateNotifier<ReadingSettings> {
   /// Updates the screen brightness and persists the change.
   void updateBrightness(double value) {
     state = state.copyWith(brightness: value, useSystemBrightness: false);
-    try {
-      ScreenBrightness().setApplicationScreenBrightness(value);
-    } catch (e) {
-      debugPrint('Brightness control not supported: $e');
-    }
+    PlatformService.instance.setBrightness(value);
     _saveSettings();
   }
 

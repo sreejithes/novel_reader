@@ -14,7 +14,8 @@ let package = Package(
         .target(
             name: "novel_reader",
             dependencies: [],
-            path: "Classes",
+            path: "..",
+            sources: ["Classes"],
             resources: [
                 .process("Resources")
             ]
