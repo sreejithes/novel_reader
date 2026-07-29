@@ -1,6 +1,5 @@
 plugins {
     id "com.android.library"
-    id "kotlin-android"
 }
 
 android {
@@ -16,11 +15,6 @@ android {
         targetCompatibility JavaVersion.VERSION_11
     }
 
-    sourceSets {
-        main.java.srcDirs += "src/main/kotlin"
-        test.java.srcDirs += "src/test/kotlin"
-    }
-
     testOptions {
         unitTests.all {
             useJUnitPlatform()
@@ -32,10 +26,6 @@ android {
             }
         }
     }
-}
-
-kotlin {
-    jvmToolchain(11)
 }
 
 dependencies {

@@ -1,10 +1,16 @@
-## 1.0.2
+## 1.0.3
 
 * **Web WASM Compatibility**: Removed `dart:io` dependencies to support Flutter's new WASM compilation target.
-* **Swift Package Manager (SPM) Support**: Added `Package.swift` for iOS and macOS, following the new Flutter plugin standard.
-* **Modernized Android Configuration**: Migrated to the modern Gradle plugins DSL and updated Kotlin configurations.
+* **Improved Platform Support**: Implemented conditional imports for platform-specific plugins (WakeLock, ScreenBrightness), resolving analyzer warnings for Web, Linux, and WASM.
+* **Swift Package Manager (SPM) Support**: Fixed SPM detection by moving `Package.swift` files to the root of `ios/` and `macos/` directories.
+* **Modernized Android Configuration**: Migrated to the modern AGP 9.0+ **Built-in Kotlin** support, simplifying the build configuration and removing legacy plugin declarations.
 * **Material 3 Compliance**: Resolved deprecation warnings for `Switch` widgets and updated to newer UI standards.
-* **Updated Dependencies**: Bumped multiple dependencies to their highest compatible versions for the current Dart SDK.
+* **Optimized Dependency Constraints**: Widened dependency ranges to support latest major versions (Riverpod 3.0, Google Fonts 7.0+) while maintaining compatibility with existing environments.
+* **Code Quality**: Resolved unnecessary import warnings and improved overall static analysis score.
+
+## 1.0.2
+
+* Initial maintenance release with minor bug fixes and metadata updates.
 
 ## 1.0.1
 

@@ -140,9 +140,9 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
     final settingsAsync = ref.watch(settingsInitializerProvider);
 
     return settingsAsync.when(
-      loading: () => Scaffold(
+      loading: () => const Scaffold(
         backgroundColor: Colors.black, // Neutral background while loading
-        body: const Center(child: CircularProgressIndicator()),
+        body: Center(child: CircularProgressIndicator()),
       ),
       error: (err, stack) => Scaffold(
         body: Center(child: Text('Error loading settings: $err')),
