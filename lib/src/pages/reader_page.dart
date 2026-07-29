@@ -167,8 +167,8 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
         }
 
         final isFirstChapter = readingState.currentChapterIndex == 0;
-        final isLastChapter =
-            readingState.currentChapterIndex == widget.config.chapters.length - 1;
+        final isLastChapter = readingState.currentChapterIndex ==
+            widget.config.chapters.length - 1;
 
         Widget body = Column(
           children: [
@@ -209,7 +209,8 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
                       onChapterChanged: (index) {
                         ref.read(readingProvider.notifier).updateChapter(index);
                       },
-                      onPreviousChapter: isFirstChapter ? null : _handlePrevious,
+                      onPreviousChapter:
+                          isFirstChapter ? null : _handlePrevious,
                       onNextChapter: isLastChapter ? null : _handleNext,
                       scrollController: _scrollController,
                     )
@@ -253,12 +254,14 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
                   _toggleControls();
                 }
               },
-              const SingleActivator(LogicalKeyboardKey.equal, control: true): () {
+              const SingleActivator(LogicalKeyboardKey.equal, control: true):
+                  () {
                 ref
                     .read(settingsProvider.notifier)
                     .updateFontSize(settings.fontSize + 1);
               },
-              const SingleActivator(LogicalKeyboardKey.minus, control: true): () {
+              const SingleActivator(LogicalKeyboardKey.minus, control: true):
+                  () {
                 ref
                     .read(settingsProvider.notifier)
                     .updateFontSize(settings.fontSize - 1);

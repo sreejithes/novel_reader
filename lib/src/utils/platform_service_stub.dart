@@ -1,6 +1,7 @@
 import 'platform_service.dart';
 
-PlatformService getPlatformService() => throw UnsupportedError('Cannot create platform service');
+PlatformService getPlatformService() =>
+    throw UnsupportedError('Cannot create platform service');
 
 abstract class PlatformServiceBase implements PlatformService {
   @override

@@ -412,11 +412,17 @@ class SettingsPanel extends ConsumerWidget {
             segments: const [
               ButtonSegment<ScrollMode>(
                 value: ScrollMode.vertical,
-                icon: Icon(Icons.swipe_vertical_outlined,color: Colors.black54,),
+                icon: Icon(
+                  Icons.swipe_vertical_outlined,
+                  color: Colors.black54,
+                ),
               ),
               ButtonSegment<ScrollMode>(
                 value: ScrollMode.horizontal,
-                icon: Icon(Icons.swap_horiz_outlined,color: Colors.black54,),
+                icon: Icon(
+                  Icons.swap_horiz_outlined,
+                  color: Colors.black54,
+                ),
               ),
             ],
             selected: {settings.scrollMode},
@@ -458,19 +464,23 @@ class SettingsPanel extends ConsumerWidget {
             segments: const [
               ButtonSegment<TextAlign>(
                 value: TextAlign.left,
-                icon: Icon(Icons.format_align_left_rounded,color: Colors.black54),
+                icon: Icon(Icons.format_align_left_rounded,
+                    color: Colors.black54),
               ),
               ButtonSegment<TextAlign>(
                 value: TextAlign.center,
-                icon: Icon(Icons.format_align_center_rounded,color: Colors.black54),
+                icon: Icon(Icons.format_align_center_rounded,
+                    color: Colors.black54),
               ),
               ButtonSegment<TextAlign>(
                 value: TextAlign.right,
-                icon: Icon(Icons.format_align_right_rounded,color: Colors.black54),
+                icon: Icon(Icons.format_align_right_rounded,
+                    color: Colors.black54),
               ),
               ButtonSegment<TextAlign>(
                 value: TextAlign.justify,
-                icon: Icon(Icons.format_align_justify_rounded,color: Colors.black54),
+                icon: Icon(Icons.format_align_justify_rounded,
+                    color: Colors.black54),
               ),
             ],
             selected: {settings.textAlign},
@@ -629,11 +639,15 @@ class SettingsPanel extends ConsumerWidget {
           Switch.adaptive(
             value: value,
             thumbColor: WidgetStateProperty.resolveWith<Color?>((states) {
-              if (states.contains(WidgetState.selected)) return theme.accentColor;
+              if (states.contains(WidgetState.selected)) {
+                return theme.accentColor;
+              }
               return null;
             }),
             trackColor: WidgetStateProperty.resolveWith<Color?>((states) {
-              if (states.contains(WidgetState.selected)) return theme.accentColor.withValues(alpha: 0.5);
+              if (states.contains(WidgetState.selected)) {
+                return theme.accentColor.withValues(alpha: 0.5);
+              }
               return null;
             }),
             onChanged: (val) {
