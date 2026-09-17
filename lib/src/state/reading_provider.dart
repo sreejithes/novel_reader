@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,8 +31,16 @@ class ReadingState {
 
 /// Notifier that manages and persists reading progress.
 class ReadingNotifier extends StateNotifier<ReadingState> {
+  Timer? _debounceTimer;
+
   /// Creates a [ReadingNotifier].
   ReadingNotifier() : super(ReadingState());
+
+  @override
+  void dispose() {
+    _debounceTimer?.cancel();
+    super.dispose();
+  }
 
   /// Updates the current chapter and resets scroll position.
   void updateChapter(int index) {
@@ -41,8 +50,13 @@ class ReadingNotifier extends StateNotifier<ReadingState> {
 
   /// Updates the scroll position within the current chapter.
   void updateScrollPosition(double position) {
+    if ((state.scrollPosition - position).abs() < 50) return; // Small change
     state = state.copyWith(scrollPosition: position);
-    _saveProgress();
+
+    _debounceTimer?.cancel();
+    _debounceTimer = Timer(const Duration(seconds: 2), () {
+      _saveProgress();
+    });
   }
 
   /// Persists current reading progress to [SharedPreferences].

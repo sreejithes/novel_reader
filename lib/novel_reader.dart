@@ -64,6 +64,7 @@ class NovelReader extends StatelessWidget {
         onNextChapter: onNextChapter,
         onPreviousChapter: onPreviousChapter,
         onChapterChanged: onChapterChanged,
+        onThemeChanged: onThemeChanged,
       ),
     );
   }

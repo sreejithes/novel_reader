@@ -24,6 +24,9 @@ class ReaderPage extends ConsumerStatefulWidget {
   /// Callback when the current chapter index changes.
   final Function(int)? onChapterChanged;
 
+  /// Callback when the theme mode is changed.
+  final Function(ReaderThemeMode)? onThemeChanged;
+
   /// Creates a [ReaderPage] instance.
   const ReaderPage({
     super.key,
@@ -31,6 +34,7 @@ class ReaderPage extends ConsumerStatefulWidget {
     this.onNextChapter,
     this.onPreviousChapter,
     this.onChapterChanged,
+    this.onThemeChanged,
   });
 
   @override
@@ -46,14 +50,29 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
   void initState() {
     super.initState();
     _scrollController = ScrollController();
+    _scrollController.addListener(_onScroll);
     _pageController = PageController();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(readingProvider.notifier).loadProgress();
+      ref.read(readingProvider.notifier).loadProgress().then((_) {
+        final state = ref.read(readingProvider);
+        if (state.scrollPosition > 0 && _scrollController.hasClients) {
+          _scrollController.jumpTo(state.scrollPosition);
+        }
+      });
     });
+  }
+
+  void _onScroll() {
+    if (_scrollController.hasClients) {
+      ref
+          .read(readingProvider.notifier)
+          .updateScrollPosition(_scrollController.offset);
+    }
   }
 
   @override
   void dispose() {
+    _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
     _pageController.dispose();
     super.dispose();
@@ -136,6 +155,21 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<ReadingState>(readingProvider, (previous, next) {
+      if (previous?.currentChapterIndex != next.currentChapterIndex) {
+        widget.onChapterChanged?.call(next.currentChapterIndex);
+        if (_scrollController.hasClients) {
+          _scrollController.jumpTo(0);
+        }
+      }
+    });
+
+    ref.listen<ReadingSettings>(settingsProvider, (previous, next) {
+      if (previous?.themeMode != next.themeMode) {
+        widget.onThemeChanged?.call(next.themeMode);
+      }
+    });
+
     final readingState = ref.watch(readingProvider);
     final settingsAsync = ref.watch(settingsInitializerProvider);
 
@@ -150,15 +184,6 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
       data: (_) {
         final settings = ref.watch(settingsProvider);
         final theme = ReaderTheme.getTheme(settings.themeMode);
-
-        ref.listen(readingProvider, (previous, next) {
-          if (previous?.currentChapterIndex != next.currentChapterIndex) {
-            widget.onChapterChanged?.call(next.currentChapterIndex);
-            if (_scrollController.hasClients) {
-              _scrollController.jumpTo(0);
-            }
-          }
-        });
 
         if (settings.hideStatusBar || !_showControls) {
           SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);

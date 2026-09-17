@@ -1,16 +1,54 @@
-# novel_reader_example
+# Novel Reader Example
 
-Demonstrates how to use the novel_reader plugin.
+This example demonstrates how to integrate the `novel_reader` package into your Flutter application.
 
-## Getting Started
+## 🚀 Getting Started
 
-This project is a starting point for a Flutter application.
+The `novel_reader` package provides a highly customizable reading experience with support for:
 
-A few resources to get you started if this is your first Flutter project:
+- **Dual Navigation Modes**: Vertical scroll and horizontal paging.
+- **Premium Themes**: Pre-built themes like Sepia, Dark, and AMOLED.
+- **Typography Control**: Integration with Google Fonts.
+- **State Persistence**: Automatically saves reading progress and user settings.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 💻 Usage
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```dart
+import 'package:flutter/material.dart';
+import 'package:novel_reader/novel_reader.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: NovelReader(
+        config: ReaderConfig(
+          title: "My Awesome Novel",
+          chapters: [
+            Chapter(
+              id: "1",
+              title: "Chapter 1: The Beginning",
+              content: "Once upon a time...",
+            ),
+            // Add more chapters here
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+
+## 🛠 Customization
+
+You can listen to various callbacks to react to user actions:
+
+- `onChapterChanged`: Triggered when the user navigates between chapters.
+- `onThemeChanged`: Triggered when the reading theme is updated.
+- `onNextChapter` / `onPreviousChapter`: Custom logic for chapter transitions.

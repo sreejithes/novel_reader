@@ -1,3 +1,11 @@
+## 1.0.4
+
+* **Release Polish**: Finalized localization for all UI components including navigation and alignment settings.
+* **Scroll Restoration**: Implemented automatic scroll position persistence and restoration when reopening chapters.
+* **Performance Optimization**: Added debounced state persistence to minimize disk I/O during active reading.
+* **Enhanced Documentation**: Updated example app documentation with comprehensive integration guides and code samples.
+* **UI Refinements**: Synchronized version strings across the package and improved UI responsiveness in the settings panel.
+
 ## 1.0.3
 
 * **Web WASM Compatibility**: Removed `dart:io` dependencies to support Flutter's new WASM compilation target.

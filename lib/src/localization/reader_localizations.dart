@@ -32,6 +32,9 @@ class ReaderLocalizations {
       'search': 'Search',
       'clear': 'Clear',
       'noResults': 'No results found',
+      'navigation': 'Navigation',
+      'alignment': 'Alignment',
+      'page': 'Page',
     },
   };
 
@@ -82,6 +85,15 @@ class ReaderLocalizations {
 
   /// Localized string for 'No results found'.
   String get noResults => _localizedValues['en']!['noResults']!;
+
+  /// Localized string for 'Navigation'.
+  String get navigation => _localizedValues['en']!['navigation']!;
+
+  /// Localized string for 'Alignment'.
+  String get alignment => _localizedValues['en']!['alignment']!;
+
+  /// Localized string for 'Page'.
+  String get page => _localizedValues['en']!['page']!;
 }
 
 /// [LocalizationsDelegate] for [ReaderLocalizations].

@@ -123,7 +123,7 @@ class SettingsPanel extends ConsumerWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: Text(
-              'Novel Reader v0.0.1 • ${snapshot.data ?? '...'}',
+              'Novel Reader v1.0.4 • ${snapshot.data ?? '...'}',
               style: TextStyle(
                 fontSize: 10,
                 fontWeight: FontWeight.w500,
@@ -397,7 +397,7 @@ class SettingsPanel extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Navigation',
+          l10n.navigation,
           style: TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w900,
@@ -449,7 +449,7 @@ class SettingsPanel extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Align',
+          l10n.alignment,
           style: TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w900,
