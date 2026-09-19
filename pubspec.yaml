@@ -3,6 +3,12 @@ description: "A professional-grade, highly customizable Novel/Ebook reader packa
 version: 1.0.4
 homepage: https://github.com/sreejithes/novel_reader
 repository: https://github.com/sreejithes/novel_reader
+issue_tracker: https://github.com/sreejithes/novel_reader/issues
+topics:
+  - reader
+  - ebook
+  - novel
+  - ui
 
 environment:
   sdk: '>=3.0.0 <4.0.0'

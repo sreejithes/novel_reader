@@ -3,9 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Provider for the [ReadingState].
-final readingProvider = StateNotifierProvider<ReadingNotifier, ReadingState>((
-  ref,
-) {
+final readingProvider = NotifierProvider<ReadingNotifier, ReadingState>(() {
   return ReadingNotifier();
 });
 
@@ -30,16 +28,15 @@ class ReadingState {
 }
 
 /// Notifier that manages and persists reading progress.
-class ReadingNotifier extends StateNotifier<ReadingState> {
+class ReadingNotifier extends Notifier<ReadingState> {
   Timer? _debounceTimer;
 
-  /// Creates a [ReadingNotifier].
-  ReadingNotifier() : super(ReadingState());
-
   @override
-  void dispose() {
-    _debounceTimer?.cancel();
-    super.dispose();
+  ReadingState build() {
+    ref.onDispose(() {
+      _debounceTimer?.cancel();
+    });
+    return ReadingState();
   }
 
   /// Updates the current chapter and resets scroll position.

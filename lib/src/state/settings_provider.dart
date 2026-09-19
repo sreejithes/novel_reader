@@ -6,7 +6,7 @@ import '../models/reading_settings.dart';
 
 /// Provider for the [ReadingSettings] state.
 final settingsProvider =
-    StateNotifierProvider<SettingsNotifier, ReadingSettings>((ref) {
+    NotifierProvider<SettingsNotifier, ReadingSettings>(() {
   return SettingsNotifier();
 });
 
@@ -16,12 +16,9 @@ final settingsInitializerProvider = FutureProvider<void>((ref) async {
 });
 
 /// Notifier that manages reading settings and persists them to local storage.
-class SettingsNotifier extends StateNotifier<ReadingSettings> {
-  /// Creates a [SettingsNotifier] and loads initial settings.
-  SettingsNotifier() : super(ReadingSettings()) {
-    // We don't call _loadSettings here anymore to avoid the default state flash.
-    // Instead, we initialize from a future.
-  }
+class SettingsNotifier extends Notifier<ReadingSettings> {
+  @override
+  ReadingSettings build() => ReadingSettings();
 
   /// Flag to track if settings have been loaded from disk.
   bool _isInitialized = false;

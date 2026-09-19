@@ -3,19 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Provider for the auto-scroll state (active or inactive).
-final autoScrollProvider = StateNotifierProvider<AutoScrollNotifier, bool>((
-  ref,
-) {
+final autoScrollProvider = NotifierProvider<AutoScrollNotifier, bool>(() {
   return AutoScrollNotifier();
 });
 
 /// Notifier that manages the automatic scrolling logic for vertical mode.
-class AutoScrollNotifier extends StateNotifier<bool> {
+class AutoScrollNotifier extends Notifier<bool> {
   Timer? _timer;
   double _speed = 1.0; // pixels per step
 
-  /// Creates an [AutoScrollNotifier] initialized to inactive.
-  AutoScrollNotifier() : super(false);
+  @override
+  bool build() {
+    ref.onDispose(() {
+      _timer?.cancel();
+    });
+    return false;
+  }
 
   /// Toggles the auto-scroll state.
   void toggle(ScrollController controller) {
@@ -49,11 +52,5 @@ class AutoScrollNotifier extends StateNotifier<bool> {
   /// Sets the speed of the automatic scroll.
   void setSpeed(double speed) {
     _speed = speed;
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
   }
 }
