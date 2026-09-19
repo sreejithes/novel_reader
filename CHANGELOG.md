@@ -1,3 +1,9 @@
+## 1.0.5
+
+* **Analysis Fixes**: Resolved static analysis errors and warnings caused by modern `flutter_riverpod` updates. Migrated legacy `StateNotifier` and `StateNotifierProvider` to modern `Notifier` and `NotifierProvider`.
+* **Documentation**: Improved documentation coverage across internal plugin files to achieve a perfect documentation score.
+* **Pub.dev Score**: Addressed issues preventing pub.dev from recognizing platform support (iOS, Android, Web, Windows, macOS, Linux) due to incomplete package analysis.
+
 ## 1.0.4
 
 * **Release Polish**: Finalized localization for all UI components including navigation and alignment settings.

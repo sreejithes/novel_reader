@@ -1,3 +1,6 @@
+/// The web implementation for the novel_reader plugin.
+library novel_reader_web;
+
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:web/web.dart' as web;
 

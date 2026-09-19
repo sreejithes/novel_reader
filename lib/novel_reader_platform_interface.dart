@@ -1,3 +1,6 @@
+/// The platform interface for the novel_reader plugin.
+library novel_reader_platform_interface;
+
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'novel_reader_method_channel.dart';
